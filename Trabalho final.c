@@ -1,4 +1,3 @@
-
 #include<stdio.h>
 #include<string.h>
 #define TAM 10
@@ -27,15 +26,22 @@ typedef struct alunos Alunos;
 typedef struct materias Materias;
 
 void cadastroAluno(Alunos aluno[TAM]);
-void cadastroMateria(Alunos aluno[TAM]);
+void cadastroMateria(Alunos aluno[TAM], Materias materia[5]);
 void materiaSemestre(Materias materia[5]);
 
 main(){
-	int i, j,x;
+	int i, j, k, x;
 	Alunos aluno[TAM];
 	Materias materia[5];
 	Dia dias[10];
-	
+	for(k=0; k<TAM; k++){
+
+		for(i=0; i<4; i++){
+			for(j=0; j<5; j++){
+			aluno[k].grade[i][j]=0;
+			}
+		}
+	}
 	
 	materiaSemestre(materia);
 	printf("Entre com a opcao:\n");
@@ -50,7 +56,7 @@ main(){
 		}
 
 		case 2:{
-			cadastroMateria(aluno);
+			cadastroMateria(aluno, materia);
 			break;
 		}
 
@@ -67,24 +73,37 @@ main(){
 
 }
 
-void cadastroMateria(Alunos aluno[TAM]){
-	int y=0, x=0, i, j, index, matri;
+void cadastroMateria(Alunos aluno[TAM], Materias materia[5]){
+	int y=0, x=0, i, j, index, index2, matri;
 	printf("Entre com a matricola do aluno: \n");
 	scanf("%d",&matri);
 	
+	for(j=0; j<TAM; j++){
+			if(aluno[j].matricula==matri)index=j;
+
+
+		}
+	
 	
 	while(x==0){
-
 		
 		printf("Entre com o codigo da materia: \n");
 		scanf("%d",&y);
 		//scanf("%d",&aluno[0].materias[0]);
 		//printf("%d",aluno[0].materias[0]);
-		for(j=0; j<TAM; j++){
-			if(aluno[j].matricula==matri)
-				index=j;
+		for(i=0; i<5; i++){
+			if(y==materia[i].cod)index2=i;
+			
 		}
 		
+		aluno[index].grade[materia[index2].grid[0][0]][materia[index2].grid[0][1]]=materia[index2].cod;
+		aluno[index].grade[materia[index2].grid[1][0]][materia[index2].grid[1][1]]=materia[index2].cod;
+		printf("%d\n",index2);
+		if(aluno[index].grade[materia[index2].grid[0][0]][materia[index2].grid[0][1]]!=0)printf("Horario ocupado!!\n");
+		if(aluno[index].grade[materia[index2].grid[1][0]][materia[index2].grid[1][1]]!=0)printf("Horario ocupado!!\n");
+		
+		
+	}
 		
 		
 	/*	for(i=0; i<5; i++){
@@ -96,7 +115,7 @@ void cadastroMateria(Alunos aluno[TAM]){
 			if(aluno[index].materias[i]==0)aluno[index].materias[i]=y;
 			
 		}*/
-	}
+
 
 
 }
@@ -125,39 +144,54 @@ void materiaSemestre( Materias materia[5]){
 	materia[0].hora[0]=8;
 	materia[0].hora[1]=10;
 	materia[0].cod=0122;
-	materia[0].grid={{0,0},
-					 {1,1}};
+	materia[0].grid[0][0]=0;
+	materia[0].grid[0][1]=0;
+	materia[0].grid[1][0]=1;
+	materia[0].grid[1][1]=1;
 
 	strcpy(materia[1].nome, "Estrutura de dados");
 	materia[1].carga=60;
 	materia[1].hora[0]=13;
 	materia[1].hora[1]=15;
 	materia[1].cod=0127;
-	materia[1].grid={{2,1},
-					 {3,2}};
+	materia[1].grid[0][0]=2;
+	materia[1].grid[0][1]=1;
+	materia[1].grid[1][0]=3;
+	materia[1].grid[1][1]=2;
+	
 
 	strcpy(materia[2].nome, "Sistemas Operacionais A");
 	materia[2].carga=60;
 	materia[2].hora[0]=13;
 	materia[2].hora[1]=10;
 	materia[2].cod=0132;
-	materia[2].grid={{2,1},
-					 {1,3}};
+	materia[2].grid[0][0]=2;
+	materia[2].grid[0][1]=1;
+	materia[2].grid[1][0]=1;
+	materia[2].grid[1][1]=3;
+	
+	
 
 	strcpy(materia[3].nome, "Padroes de Projeto");
 	materia[3].carga=30;
 	materia[3].hora[0]=10;
 	materia[3].cod=0143;
-	materia[3].grid={{1,4},
-					 {-1,-1}};
+	materia[3].grid[0][0]=1;
+	materia[3].grid[0][1]=4;
+	materia[3].grid[1][0]=-1;
+	materia[3].grid[1][1]=-1;
+	
 
 	strcpy(materia[4].nome, "Banco de dados II");
 	materia[4].carga=60;
 	materia[4].hora[0]=10;
 	materia[4].hora[1]=10;
 	materia[4].cod=0135;
-	materia[4].grid={{1,2},
-					 {1,4}};
+	materia[4].grid[0][0]=1;
+	materia[4].grid[0][1]=2;
+	materia[4].grid[1][0]=1;
+	materia[4].grid[1][1]=4;
+	
 
 
 }
