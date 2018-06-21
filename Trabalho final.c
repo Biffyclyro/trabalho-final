@@ -1,4 +1,3 @@
-
 #include<stdio.h>
 #include<string.h>
 #define TAM 10
@@ -38,7 +37,7 @@ main(){
 	Alunos aluno[TAM];
 	Materias materia[5];
 	Dia dias[10];
-	cadastroAluno(aluno);
+	
 	
 	for(k=0; k<TAM; k++){
 		aluno[k].matricula=0;
@@ -48,6 +47,8 @@ main(){
 			}
 		}
 	}
+	
+	cadastroAluno(aluno);
 	
 	materiaSemestre(materia);
 	printf("Entre com a opcao:\n");
@@ -151,8 +152,8 @@ void cadastroMateria(Alunos aluno[TAM], Materias materia[5]){
 }
 
 void consultaAluno(Alunos aluno[TAM]){
-	int i, index;
-	char nome[30];
+	int i, j, index, comp=0;
+	char nome[30], nomeCompleto[50]={};
 	printf("Entre com nome do aluno, ou parte dele: \n");
 	fflush(stdin);
 	gets(nome);
@@ -160,6 +161,21 @@ void consultaAluno(Alunos aluno[TAM]){
 		if(strcmp(aluno[i].nome, nome)==0){
 			index=i;
 			printf("é nois");
+		}for(j=0; j<strlen(nome); j++){
+			if(nome[j]==aluno[i].nome[j]){
+				comp++;
+				if(comp==strlen(nome)-1){
+					fflush(stdin);
+					strcpy(nomeCompleto, aluno[i].nome);
+					fflush(stdin);
+					strcat(strcat(nomeCompleto, " "),aluno[i].sobre);
+					puts(nomeCompleto);
+				//	puts(strcat(aluno[i].nome,strcat(" ",aluno[i].sobre)));
+					puts(aluno[i].email);
+					printf("%d",aluno[i].matricula);
+					
+				}
+			}
 		}
 	}
 	
@@ -188,20 +204,24 @@ void novoAluno(Alunos aluno[TAM]){
 		printf("Entre com email do novo aluno: \n");
 		fflush(stdin);
 		gets(email);
+		fflush(stdin);
 		for(j=0; j<30; j++){
-			if(email[j]=='@' && j<3){
+			if(email[j]=='@' && j<2){
 				printf("Email deve ter ao menos 3 caracteres \n");
 				arroba=j;
 			}
-			else if(email[j]=='.' && j-arroba < 3){
-				printf("Email deve tar ao menos 3 caracteres apos o @: \n");
+			if(email[j]=='.' && j-arroba < 4){
+				printf("Email deve tar ao menos 3 caracteres apos o @ \n");
 				ponto=j;				
+			}else if(email[j]=='\0' && j-ponto < 3){
+				printf("Email deve ter ao menos 2 caracteres apos o .\n",ponto);
+				j=30;
 			}
-			else if(email[ponto+3]=='\0'){
-				printf("Email deve ter ao menos 2 caracteres apos o . %d\n",ponto);
+			else{
+				strcmp(aluno[index].email, email);
 			}
 		}
-		x++;
+		
 	}
 }
 
@@ -210,7 +230,7 @@ void cadastroAluno(Alunos aluno[TAM]){
 
 
 
-	strcpy(aluno[0].nome, "Joao");
+	strcpy(aluno[0].nome, "julliet");
 	strcpy(aluno[0].sobre, "Senna da Rosa");
 	strcpy(aluno[0].email, "asjaosjoasjoas@hotmail.com");
 	aluno[0].matricula=1220;
