@@ -160,7 +160,16 @@ void consultaAluno(Alunos aluno[TAM]){
 	for(i=0; i<TAM; i++){
 		if(strcmp(aluno[i].nome, nome)==0){
 			index=i;
-			printf("é nois");
+			fflush(stdin);
+			strcpy(nomeCompleto, aluno[i].nome);
+			fflush(stdin);
+			strcat(strcat(nomeCompleto, " "),aluno[i].sobre);
+			puts(nomeCompleto);
+			
+			puts(aluno[i].email);
+			printf("%d",aluno[i].matricula);
+			
+			
 		}for(j=0; j<strlen(nome); j++){
 			if(nome[j]==aluno[i].nome[j]){
 				comp++;
@@ -170,7 +179,7 @@ void consultaAluno(Alunos aluno[TAM]){
 					fflush(stdin);
 					strcat(strcat(nomeCompleto, " "),aluno[i].sobre);
 					puts(nomeCompleto);
-				//	puts(strcat(aluno[i].nome,strcat(" ",aluno[i].sobre)));
+				
 					puts(aluno[i].email);
 					printf("%d",aluno[i].matricula);
 					
