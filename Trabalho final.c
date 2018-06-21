@@ -25,7 +25,8 @@ typedef struct dia Dia;
 typedef struct alunos Alunos;
 typedef struct materias Materias;
 
-void imprime(Alunos aluno[TAM]);
+void retornaMat(Materias materia[5], int mat, char a[40]);
+void imprime(Alunos aluno[TAM], Materias materia[5]);
 void cadastroAluno(Alunos aluno[TAM]);
 void cadastroMateria(Alunos aluno[TAM], Materias materia[5]);
 void materiaSemestre(Materias materia[5]);
@@ -34,6 +35,7 @@ void consultaAluno(Alunos aluno[TAM]);
 
 main(){
 	int i, j, k, x;
+	
 	Alunos aluno[TAM];
 	Materias materia[5];
 	Dia dias[10];
@@ -48,7 +50,12 @@ main(){
 		}
 	}
 	
+	
 	cadastroAluno(aluno);
+	
+	//retornaMat(aluno, materia, 0, a);
+	//puts(a);
+	
 	
 	materiaSemestre(materia);
 	printf("Entre com a opcao:\n");
@@ -69,7 +76,7 @@ main(){
 		}
 
 		case 3:{
-			imprime(aluno);
+			imprime(aluno, materia);
 			break;
 		}
 
@@ -174,6 +181,7 @@ void consultaAluno(Alunos aluno[TAM]){
 			if(nome[j]==aluno[i].nome[j]){
 				comp++;
 				if(comp==strlen(nome)-1){
+					index=i;
 					fflush(stdin);
 					strcpy(nomeCompleto, aluno[i].nome);
 					fflush(stdin);
@@ -252,33 +260,52 @@ void cadastroAluno(Alunos aluno[TAM]){
 
 }
 
-void imprime(Alunos aluno[TAM]){
+void imprime(Alunos aluno[TAM], Materias materia[5]){
 	int i, j, index, matri;
-	
+	char a[40];
 	printf("Entre com a matricula: \n");
 	scanf("%d", &matri);
 	for(j=0; j<TAM; j++){
 		if(aluno[j].matricula==matri)index=j;
 	}
+	
+	
+	
 	printf("         Seg       Ter       Qua       Qui       sex\n");
 	 for(i=0; i<4; i++){
 	 	for(j=0; j<5; j++){
+	 		retornaMat(materia, aluno[index].grade[i][j], a);
 	 		if(i==0 && j==0)printf("08:00    ");
-	 		if(i==0)printf(" %d        ",aluno[index].grade[i][j]);
+	 		if(i==0)printf(" %s        ", a);
 	 		if(i==1 && j==0)printf("10:00    ");
-	 		if(i==1)printf(" %d        ",aluno[index].grade[i][j]);
+	 		if(i==1)printf(" %s        ",a);
 	 		if(i==2 && j==0)printf("13:00    ");
-	 		if(i==2)printf(" %d        ",aluno[index].grade[i][j]);
+	 		if(i==2)printf(" %s        ",a);
 	 		if(i==3 && j==0)printf("15:00    ");
-	 		if(i==3)printf(" %d        ",aluno[index].grade[i][j]);
+	 		if(i==3)printf(" s%        ",a);
 	 		//printf("%d   ", aluno[index].grade[i][j]);
 	 		if(j==4)printf("\n");
+	 		//puts(retornaMat(aluno, materia, index));
 		 }
 		 printf("\n");
 	 }
 	
 		
 		
+}
+
+void retornaMat(Materias materia[5], int mat, char a[40]){
+	int k;
+	//char materia[30];
+	//for(i=0; i<4; i++){
+	//	for(j=0; j<5; j++){
+			for(k=0; k<5; k++){
+				if(mat==materia[k].cod);
+				strcpy(a, materia[k].nome);
+				return;
+	//		}
+	//	}
+	}	
 }
 
 void materiaSemestre( Materias materia[5]){
