@@ -200,7 +200,7 @@ void consultaAluno(Alunos aluno[TAM]){
 }
 
 void novoAluno(Alunos aluno[TAM]){
-	int i, j, x=0, index, arroba, ponto=0;
+	int i, j, x=0, index, arroba=0, ponto=0;
 	char email[30];
 	
 	for(i=0; i<TAM; i++){
@@ -222,12 +222,14 @@ void novoAluno(Alunos aluno[TAM]){
 		fflush(stdin);
 		gets(email);
 		fflush(stdin);
+		
 		for(j=0; j<30; j++){
-			if(email[j]=='@' && j<2){
+			if(email[j]=='@' && j<3){
 				printf("Email deve ter ao menos 3 caracteres \n");
 				arroba=j;
 			}
-			if(email[j]=='.' && j-arroba < 4){
+			if(email[j]=='.' && j-arroba < 3){
+				printf("%d %d\n", j, arroba);
 				printf("Email deve tar ao menos 3 caracteres apos o @ \n");
 				ponto=j;				
 			}else if(email[j]=='\0' && j-ponto < 3){
