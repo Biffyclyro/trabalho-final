@@ -26,11 +26,11 @@ typedef struct alunos Alunos;
 typedef struct materias Materias;
 
 void retornaMat(Materias materia[5], int mat, char a[40]);
-void imprime(Alunos aluno[TAM], Materias materia[5]);
+void imprime(Alunos aluno[TAM], Materias materia[5], int matri);
 void cadastroAluno(Alunos aluno[TAM]);
 void cadastroMateria(Alunos aluno[TAM], Materias materia[5]);
 void materiaSemestre(Materias materia[5]);
-void novoAluno(Alunos aluno[TAM]);
+void novoAluno(Alunos aluno[TAM], Materias materia[5]);
 void consultaAluno(Alunos aluno[TAM],Materias materia[5]);
 
 main(){
@@ -59,6 +59,7 @@ main(){
 	
 	materiaSemestre(materia);
 	while(y==0){
+	//	system("cls");
 		printf("Entre com a opcao:\n");
 		printf("1. Consulta de aluno.\n");
 		printf("2. Cadastro de materia.\n");
@@ -70,11 +71,13 @@ main(){
 		
 			switch(x){
 				case 1:{
+					system("cls");
 					consultaAluno(aluno, materia);
 					break;
 				}
 		
 				case 2:{
+					system("cls");
 					cadastroMateria(aluno, materia);
 					break;
 				}
@@ -85,7 +88,8 @@ main(){
 				}
 		
 				case 4:{
-					novoAluno(aluno);
+					system("cls");
+					novoAluno(aluno, materia);
 					break;
 				}
 				case 5:{
@@ -93,6 +97,12 @@ main(){
 					y++;
 					break;
 				}
+				default :{
+					printf("Valor errado!!\n");
+					sleep(1);
+					break;
+				}
+			
 		
 			}
 	}
@@ -102,7 +112,7 @@ main(){
 void cadastroMateria(Alunos aluno[TAM], Materias materia[5]){
 	int y=0, x=0, i, j, a, b, c, d, index, index2, matri;
 	char resp='y';
-	printf("Entre com a matricola do aluno: \n");
+	printf("Entre com a matricula do aluno: \n");
 	scanf("%d",&matri);
 	
 	for(j=0; j<TAM; j++){
@@ -189,7 +199,7 @@ void consultaAluno(Alunos aluno[TAM],Materias materia[5]){
 			puts(aluno[i].email);
 			printf("\nMatricula: %d\n\n",aluno[i].matricula);
 			fflush(stdin);
-			imprime(aluno, materia);
+			imprime(aluno, materia, aluno[i].matricula);
 			
 			
 		}
@@ -209,7 +219,7 @@ void consultaAluno(Alunos aluno[TAM],Materias materia[5]){
 					puts(aluno[i].email);
 					printf("\nMatricula: %d\n\n",aluno[i].matricula);
 					fflush(stdin);
-					imprime(aluno, materia);
+					imprime(aluno, materia,aluno[i].matricula);
 					
 				}
 			}
@@ -219,12 +229,17 @@ void consultaAluno(Alunos aluno[TAM],Materias materia[5]){
 	
 }
 
-void novoAluno(Alunos aluno[TAM]){
-	int i, j, x=0, index, arroba=0, ponto=0;
+void novoAluno(Alunos aluno[TAM], Materias materia[5]){
+	int i, j, k, l, x=0, index, arroba=0, ponto=0;
 	char email[30];
 	
 	for(i=0; i<TAM; i++){
 		if(aluno[i].matricula==0)index=i;
+	}
+	for(k=0; k<4; k++){
+		for(l=0; l<5; l++){
+			aluno[index].grade[k][l]=0;
+		}
 	}
 	fflush(stdin);
 	printf("Entre com o nome do novo aluno: \n");
@@ -236,32 +251,51 @@ void novoAluno(Alunos aluno[TAM]){
 	printf("Entre com o numero da matricula: \n");
 	
 	scanf("%d",&aluno[index].matricula);
-	while(x==0){
+	while(x < 3){
 		fflush(stdin);
 		printf("Entre com email do novo aluno: \n");
 		fflush(stdin);
 		gets(email);
 		fflush(stdin);
-		
+		x=0;
 		for(j=0; j<30; j++){
-			if(email[j]=='@' && j<3){
-				printf("Email deve ter ao menos 3 caracteres \n");
+			if(email[j]=='@'){				
 				arroba=j;
 			}
-			if(email[j]=='.' && j-arroba < 3){
-				printf("%d %d\n", j, arroba);
-				printf("Email deve tar ao menos 3 caracteres apos o @ \n");
-				ponto=j;				
-			}else if(email[j]=='\0' && j-ponto < 3){
-				printf("Email deve ter ao menos 2 caracteres apos o .\n",ponto);
-				j=30;
+			if(email[j]=='@' && j<3){
+				printf("Email deve ter ao menos 3 caracteres \n");
+				
+			
+			}else if(email[j]=='@' && j>=3){
+				x++;
 			}
-			else{
-				strcmp(aluno[index].email, email);
+			if(email[j]=='.'){
+				
+				
+				ponto=j;				
+			}
+			if(email[j]=='.' && j-arroba < 3){
+				printf("Email deve tar ao menos 3 caracteres apos o @ \n");
+				
+			}else if(email[j]=='.' && j-arroba >= 3){
+				x++;
+			}
+			if(email[j]=='\0' && j-ponto < 3){
+				printf("Email deve ter ao menos 2 caracteres apos o .\n",ponto);
+				
+				j=30;
+			}else if(email[j]=='\0' && j-ponto >= 3){
+				x++;
+			}
+			if(x==3){
+				strcpy(aluno[index].email, email);
+				
 			}
 		}
 		
 	}
+	//cadastroMateria(aluno,materia);
+	
 }
 
 
@@ -287,14 +321,14 @@ void cadastroAluno(Alunos aluno[TAM]){
 
 }
 
-void imprime(Alunos aluno[TAM], Materias materia[5]){
-	int i, j, index, matri;
+void imprime(Alunos aluno[TAM], Materias materia[5], int matri){
+	int i, j, index;
 	char a[40]={};
 /*	printf("Entre com a matricula: \n");
-	scanf("%d", &matri);
+	scanf("%d", &matri); */
 	for(j=0; j<TAM; j++){
 		if(aluno[j].matricula==matri)index=j;
-	} */
+	} 
 	
 	
 	
