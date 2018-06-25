@@ -289,6 +289,7 @@ void novoAluno(Alunos aluno[TAM], Materias materia[5]){
 			}
 			if(x==3){
 				strcpy(aluno[index].email, email);
+				printf("Vá para o cadastro das materias!!\n");
 				
 			}
 		}
@@ -313,9 +314,22 @@ void cadastroAluno(Alunos aluno[TAM]){
 	aluno[0].grade[2][1]=127;
 	aluno[0].grade[3][2]=127;
 	aluno[0].grade[1][4]=143;
-	puts(aluno[0].nome);
-	puts(aluno[0].sobre);
-	puts(aluno[0].email);
+	
+	
+	
+	
+	strcpy(aluno[1].nome, "Gabriela");
+	strcpy(aluno[1].sobre, "Trevisan Leturiondo");
+	strcpy(aluno[1].email, "agabriela@gmail.com");
+	aluno[1].matricula=1330;
+	aluno[1].grade[0][0]=122;
+	aluno[1].grade[1][1]=122;
+	aluno[1].grade[2][1]=132;
+	aluno[1].grade[3][2]=132;
+	aluno[1].grade[1][4]=135;
+	aluno[1].grade[1][2]=135;
+	
+	
 
 
 
@@ -412,7 +426,7 @@ void materiaSemestre( Materias materia[5]){
 	
 
 	strcpy(materia[3].nome, "Padroes de Projeto");
-	strcpy(materia[3].abrev, "P/Proj");
+	strcpy(materia[3].abrev, "P/Pro");
 	materia[3].carga=30;
 	materia[3].hora[0]=10;
 	materia[3].cod=143;
@@ -423,7 +437,7 @@ void materiaSemestre( Materias materia[5]){
 	
 
 	strcpy(materia[4].nome, "Banco de dados II");
-	strcpy(materia[4].abrev, "B/Dados");
+	strcpy(materia[4].abrev, "B/Dad");
 	materia[4].carga=60;
 	materia[4].hora[0]=10;
 	materia[4].hora[1]=10;
