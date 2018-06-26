@@ -10,7 +10,7 @@ struct alunos{
 };
 
 struct materias{
-	char nome[20], dia[10], abrev[10];
+	char nome[20], dia[10], abrev[10], prof[15];
 	int carga, hora[2], cod;
 	int grid[2][2];
 };
@@ -24,7 +24,7 @@ struct dia{
 typedef struct dia Dia;
 typedef struct alunos Alunos;
 typedef struct materias Materias;
-
+void consultaDisc(Materias materia[5]);
 void retornaMat(Materias materia[5], int mat, char a[40]);
 void imprime(Alunos aluno[TAM], Materias materia[5], int matri);
 void cadastroAluno(Alunos aluno[TAM]);
@@ -46,6 +46,7 @@ main(){
 		for(i=0; i<4; i++){
 			for(j=0; j<5; j++){
 			aluno[k].grade[i][j]=0;
+			aluno[k].materias[j]=0;
 			}
 		}
 	}
@@ -62,9 +63,9 @@ main(){
 	//	system("cls");
 		printf("Entre com a opcao:\n");
 		printf("1. Consulta de aluno.\n");
-		printf("2. Cadastro de materia.\n");
-		printf("3. Impressão da grade.\n");
-		printf("4. Cadastro de aluno.\n");
+		printf("2. Cadastro de materia.\n");		
+		printf("3. Cadastro de aluno.\n");
+		printf("4. Contultar disciplinas.\n");
 		printf("5. Sair do programa.\n");
 		scanf("%d",&x);
 		
@@ -82,19 +83,19 @@ main(){
 					break;
 				}
 		
+				
 				case 3:{
-					
-					break;
-				}
-		
-				case 4:{
 					system("cls");
 					novoAluno(aluno, materia);
 					break;
 				}
+				case 4:{
+					consultaDisc(materia);
+					break;
+				}
 				case 5:{
 					printf("Saindo do programa...");
-					y++;
+					y++;					
 					break;
 				}
 				default :{
@@ -153,13 +154,15 @@ void cadastroMateria(Alunos aluno[TAM], Materias materia[5]){
 		
 		}else{
 			aluno[index].grade[c][d]=materia[index2].cod;
+			aluno[index].materias[index2]=materia[index2].cod;
 			
 			
 		}
 		
-		
+		system("cls");
 		printf("Mais alguma materia? (S/N)\n");
 		scanf(" %c", &resp);
+		system("cls");
 		
 		
 		
@@ -187,7 +190,7 @@ void consultaAluno(Alunos aluno[TAM],Materias materia[5]){
 	fflush(stdin);
 	gets(nome);
 	for(i=0; i<TAM; i++){
-		if(strcmp(aluno[i].nome, nome)==0){
+	/*	if(strcmp(aluno[i].nome, nome)==0){
 			index=i;
 			fflush(stdin);
 			strcpy(nomeCompleto, aluno[i].nome);
@@ -200,9 +203,11 @@ void consultaAluno(Alunos aluno[TAM],Materias materia[5]){
 			printf("\nMatricula: %d\n\n",aluno[i].matricula);
 			fflush(stdin);
 			imprime(aluno, materia, aluno[i].matricula);
+			fflush(stdin);
+			 */
 			
 			
-		}
+	//	}
 		for(j=0; j<strlen(nome); j++){
 			if(nome[j]==aluno[i].nome[j]){
 				comp++;
@@ -220,6 +225,8 @@ void consultaAluno(Alunos aluno[TAM],Materias materia[5]){
 					printf("\nMatricula: %d\n\n",aluno[i].matricula);
 					fflush(stdin);
 					imprime(aluno, materia,aluno[i].matricula);
+					fflush(stdin);
+					
 					
 				}
 			}
@@ -308,7 +315,11 @@ void cadastroAluno(Alunos aluno[TAM]){
 	strcpy(aluno[0].sobre, "Senna da Rosa");
 	strcpy(aluno[0].email, "asjaosjoasjoas@hotmail.com");
 	aluno[0].matricula=1220;
-	//aluno[0].materias={0};
+	aluno[0].materias[0]=122;
+	aluno[0].materias[1]=127;
+	aluno[0].materias[2]=143;
+	aluno[0].materias[3]=0;
+	aluno[0].materias[4]=0;
 	aluno[0].grade[0][0]=122;
 	aluno[0].grade[1][1]=122;
 	aluno[0].grade[2][1]=127;
@@ -322,6 +333,11 @@ void cadastroAluno(Alunos aluno[TAM]){
 	strcpy(aluno[1].sobre, "Trevisan Leturiondo");
 	strcpy(aluno[1].email, "agabriela@gmail.com");
 	aluno[1].matricula=1330;
+	aluno[1].materias[0]=122;
+	aluno[1].materias[1]=132;
+	aluno[1].materias[2]=135;
+	aluno[1].materias[3]=0;
+	aluno[1].materias[4]=0;
 	aluno[1].grade[0][0]=122;
 	aluno[1].grade[1][1]=122;
 	aluno[1].grade[2][1]=132;
@@ -386,6 +402,58 @@ void retornaMat(Materias materia[5], int mat, char a[40]){
 	//		}
 	//	}
 	}	
+}
+void consultaDisc(Materias materia[5]){
+	int i, x, y=0, z=0;
+	char nome[10];
+	printf("1. Entre com nome ou codigo :\n");
+	printf("2. Entre com o nome da disciplina:\n");
+	scanf("%d", &z);
+	switch(z){
+		case 1:{
+			printf("Entre com o codigo da disciplina:\n");
+			scanf("%d", &x);
+			break;
+		}
+		case 2:{
+			printf("Ente com o nome da disciplina:\n");
+			fflush(stdin);
+			gets(nome);	
+			break;
+		}
+		default:{
+			printf("Valor informado esta errado!!\n");
+			break;
+		}
+	}
+	
+	
+	
+	
+	
+	while(y==0){
+		fflush(stdin);
+		for(i=0; i<5; i++){
+			if(materia[i].cod==x){
+				puts(materia[i].nome);
+				fflush(stdin);
+				puts(materia[i].prof);
+				printf("Carga horaria: %d\n",materia[i].carga);
+				printf("%d\n", materia[i].hora[0]);
+				printf("%d\n", materia[i].hora[1]);
+				y++;						
+			}
+			if(!(strcmp(materia[i].nome, nome))){
+				puts(materia[i].nome);
+				fflush(stdin);
+				puts(materia[i].prof);
+				printf("Carga horaria: %d\n",materia[i].carga);
+				printf("%d\n", materia[i].hora[0]);
+				printf("%d\n", materia[i].hora[1]);
+				y++;
+			}
+		}
+	}
 }
 
 void materiaSemestre( Materias materia[5]){
