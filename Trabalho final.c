@@ -59,7 +59,7 @@ main(){
 		system("cls");
 		printf("Entre com a opcao:\n");
 		printf("1. Consulta de aluno.\n");
-		printf("2. Cadastro de materia.\n");		
+		printf("2. Cadastro de disciplina.\n");		
 		printf("3. Cadastro de aluno.\n");
 		printf("4. Contultar disciplinas.\n");
 		printf("5. Sair do programa.\n");
@@ -263,11 +263,11 @@ void novoAluno(Alunos aluno[TAM], Materias materia[5]){
 				x++;
 			}
 			if(email[j]=='\0' && j-ponto < 3){
-				printf("Email deve ter ao menos 2 caracteres apos o .\n",ponto);
+				printf("Email deve ter ao menos 2 caracteres apos o .\n");
 				
-				j=30;
-			}if(email[j]=='\0' && j-ponto >= 3){
-				
+				break;
+			}if(email[j]=='\0' && j-ponto > 3){
+				printf("%d",j);
 				x++;
 			}
 			if(x==3){
@@ -391,6 +391,7 @@ void consultaDisc(Materias materia[5]){
 		scanf("%d", &z);
 		//o tempo começou a apertar e a única forma de fazer isso e funcionas foi com outro switch case
 		switch(z){
+			
 			case 1:{
 				system("cls");
 				printf("Entre com o codigo da disciplina.\n");
@@ -408,6 +409,7 @@ void consultaDisc(Materias materia[5]){
 			}
 			default:{
 				system("cls");
+				fflush(stdin);
 				printf("Valor informado esta errado!!\n");
 				sleep(3);
 				break;
