@@ -10,15 +10,12 @@ struct alunos{
 };
 
 struct materias{
-	char nome[20], dia[10], abrev[10], prof[30];
+	char nome[20], dia[20], dia2[20], abrev[10], prof[30];
 	int carga, hora[2], cod;
 	int grid[2][2];
 };
 
-struct dia{
-	char nome[10], materias[10];
 
-};
 
 
 typedef struct dia Dia;
@@ -38,7 +35,7 @@ main(){
 	
 	Alunos aluno[TAM];
 	Materias materia[5];
-	Dia dias[10];
+	
 	
 	
 	for(k=0; k<TAM; k++){
@@ -60,7 +57,7 @@ main(){
 	
 	materiaSemestre(materia);
 	while(y==0){
-	//	system("cls");
+		system("cls");
 		printf("Entre com a opcao:\n");
 		printf("1. Consulta de aluno.\n");
 		printf("2. Cadastro de materia.\n");		
@@ -244,6 +241,7 @@ void consultaAluno(Alunos aluno[TAM],Materias materia[5]){
 				fflush(stdin);
 				imprime(aluno, materia,aluno[i].matricula);
 				fflush(stdin);
+				sleep(3);
 				return;
 					
 				
@@ -346,16 +344,16 @@ void cadastroAluno(Alunos aluno[TAM]){
 	strcpy(aluno[0].sobre, "Piluski");
 	strcpy(aluno[0].email, "asjaosjoasjoas@hotmail.com");
 	aluno[0].matricula=1220;
-	aluno[0].materias[0]=0122;
-	aluno[0].materias[1]=0127;
-	aluno[0].materias[2]=0143;
+	aluno[0].materias[0]=122;
+	aluno[0].materias[1]=127;
+	aluno[0].materias[2]=143;
 	aluno[0].materias[3]=0;
 	aluno[0].materias[4]=0;
-	aluno[0].grade[0][0]=0122;
-	aluno[0].grade[1][1]=0122;
-	aluno[0].grade[2][1]=0127;
-	aluno[0].grade[3][2]=0127;
-	aluno[0].grade[1][4]=0143;
+	aluno[0].grade[0][0]=122;
+	aluno[0].grade[1][1]=122;
+	aluno[0].grade[2][1]=127;
+	aluno[0].grade[3][2]=127;
+	aluno[0].grade[1][4]=143;
 	
 	
 	
@@ -364,33 +362,33 @@ void cadastroAluno(Alunos aluno[TAM]){
 	strcpy(aluno[1].sobre, "Trevisan Leturiondo");
 	strcpy(aluno[1].email, "gagabriel@gmail.com");
 	aluno[1].matricula=1330;
-	aluno[1].materias[0]=0122;
-	aluno[1].materias[1]=0132;
-	aluno[1].materias[2]=0135;
+	aluno[1].materias[0]=122;
+	aluno[1].materias[1]=132;
+	aluno[1].materias[2]=135;
 	aluno[1].materias[3]=0;
 	aluno[1].materias[4]=0;
-	aluno[1].grade[0][0]=0122;
-	aluno[1].grade[1][1]=0122;
-	aluno[1].grade[2][1]=0132;
-	aluno[1].grade[3][2]=0132;
-	aluno[1].grade[1][4]=0135;
-	aluno[1].grade[1][2]=0135;
+	aluno[1].grade[0][0]=122;
+	aluno[1].grade[1][1]=122;
+	aluno[1].grade[2][1]=132;
+	aluno[1].grade[3][2]=132;
+	aluno[1].grade[1][4]=135;
+	aluno[1].grade[1][2]=135;
 	
 	
 	strcpy(aluno[2].nome, "Rafaella");
 	strcpy(aluno[2].sobre, "Marques Farias");
 	strcpy(aluno[2].email, "rafaell@hotmail.com");
 	aluno[2].matricula=1440;
-	aluno[2].materias[0]=0122;
-	aluno[2].materias[1]=0127;
-	aluno[2].materias[2]=0143;
+	aluno[2].materias[0]=122;
+	aluno[2].materias[1]=127;
+	aluno[2].materias[2]=143;
 	aluno[2].materias[3]=0;
 	aluno[2].materias[4]=0;
-	aluno[2].grade[0][0]=0122;
-	aluno[2].grade[1][1]=0122;
-	aluno[2].grade[2][1]=0127;
-	aluno[2].grade[3][2]=0127;
-	aluno[2].grade[1][4]=0143;
+	aluno[2].grade[0][0]=122;
+	aluno[2].grade[1][1]=122;
+	aluno[2].grade[2][1]=127;
+	aluno[2].grade[3][2]=127;
+	aluno[2].grade[1][4]=143;
 
 
 }
@@ -451,6 +449,7 @@ void consultaDisc(Materias materia[5]){
 	int i, x, y=0, z=0, s=0;
 	char nome[10];
 	while(s==0){
+		
 	
 		system("cls");
 		printf("Escolha a opicao:\n");
@@ -488,26 +487,38 @@ void consultaDisc(Materias materia[5]){
 	
 	while(y==0){
 		fflush(stdin);
+		int a=0;
 		for(i=0; i<5; i++){
 			if(materia[i].cod==x){
 				puts(materia[i].nome);
 				fflush(stdin);
 				puts(materia[i].prof);
 				printf("Carga horaria: %d\n",materia[i].carga);
-				printf("%d:00h\n", materia[i].hora[0]);
-				printf("%d:00h\n", materia[i].hora[1]);
-				y++;						
+				puts(materia[i].dia);
+				puts(materia[i].dia2);
+				sleep(3);
+				y++;
+				a++;					
 			}
 			if(!(strcmp(materia[i].nome, nome))){
 				puts(materia[i].nome);
 				fflush(stdin);
 				puts(materia[i].prof);
 				printf("Carga horaria: %d\n",materia[i].carga);
-				printf("%d:00h\n", materia[i].hora[0]);
-				printf("%d:00h\n", materia[i].hora[1]);
+				puts(materia[i].dia);
+				puts(materia[i].dia2);
+				sleep(3);
+				a++;
 				y++;
 			}
+		
 		}
+		if(a==0){
+			printf("Materia nao encontrada, tente novamente.\n");
+			sleep(2);
+			break;
+		}
+	
 	}
 }
 
@@ -515,6 +526,8 @@ void materiaSemestre( Materias materia[5]){
 	strcpy(materia[0].nome, "Algoritmos");
 	strcpy(materia[0].abrev, "Algo");
 	strcpy(materia[0].prof, "Jonas Bulegon Gassen");
+	strcpy(materia[0].dia, "Segunda 08:00");
+	strcpy(materia[0].dia2, "Terca 10:00");
 	materia[0].carga=60;
 	materia[0].hora[0]=8;
 	materia[0].hora[1]=10;
@@ -527,6 +540,8 @@ void materiaSemestre( Materias materia[5]){
 	strcpy(materia[1].nome, "Estrutura de dados");
 	strcpy(materia[1].abrev, "Estr");
 	strcpy(materia[1].prof, "Jonas Bulegon Gassen");
+	strcpy(materia[1].dia, "Terca 13:00");
+	strcpy(materia[1].dia2, "Quarta 15:00");
 	materia[1].carga=60;
 	materia[1].hora[0]=13;
 	materia[1].hora[1]=15;
@@ -540,6 +555,8 @@ void materiaSemestre( Materias materia[5]){
 	strcpy(materia[2].nome, "Sistemas Operacionais A");
 	strcpy(materia[2].abrev, "Sis.Op");
 	strcpy(materia[2].prof, "Rafael Gressler Milbradt");
+	strcpy(materia[2].dia, "Terca 13:00");
+	strcpy(materia[2].dia2, "Quinta 10:00");
 	materia[2].carga=60;
 	materia[2].hora[0]=13;
 	materia[2].hora[1]=10;
@@ -554,6 +571,8 @@ void materiaSemestre( Materias materia[5]){
 	strcpy(materia[3].nome, "Padroes de Projeto");
 	strcpy(materia[3].abrev, "P/Pro");
 	strcpy(materia[3].prof, " Marcos Alexandre Rose Silva");
+	strcpy(materia[3].dia, "Sexta 10:00");
+	strcpy(materia[3].dia2, " ");	
 	materia[3].carga=30;
 	materia[3].hora[0]=10;
 	materia[3].cod=143;
@@ -566,6 +585,8 @@ void materiaSemestre( Materias materia[5]){
 	strcpy(materia[4].nome, "Banco de dados II");
 	strcpy(materia[4].abrev, "B/Dad");
 	strcpy(materia[4].prof, "Daniel Lichtnow");
+	strcpy(materia[4].dia, "Quarta 10:00");
+	strcpy(materia[4].dia2, "Sexta 10:00");
 	materia[4].carga=60;
 	materia[4].hora[0]=10;
 	materia[4].hora[1]=10;
