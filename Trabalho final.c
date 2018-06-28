@@ -2,10 +2,10 @@
 #include<string.h>
 #define TAM 10
 
-
 struct alunos{
 	char nome[20], sobre[50], email[30];
 	int matricula, materias[5], grade[4][5];
+	//struct que dos alunos
 
 };
 
@@ -13,14 +13,14 @@ struct materias{
 	char nome[20], dia[20], dia2[20], abrev[10], prof[30];
 	int carga, hora[2], cod;
 	int grid[2][2];
+	//struct das materias
 };
 
-
-
-
-typedef struct dia Dia;
+//aqui os structs ganham nome 
 typedef struct alunos Alunos;
 typedef struct materias Materias;
+
+//aqui os protótipos das funções são criados
 void consultaDisc(Materias materia[5]);
 void retornaMat(Materias materia[5], int mat, char a[40]);
 void imprime(Alunos aluno[TAM], Materias materia[5], int matri);
@@ -32,12 +32,11 @@ void consultaAluno(Alunos aluno[TAM],Materias materia[5]);
 
 main(){
 	int i, j, k, x, y=0;
-	
+	//aqui é definido o tamano dos arrays de structs
 	Alunos aluno[TAM];
-	Materias materia[5];
+	Materias materia[5];	
 	
-	
-	
+	//essa função varre todos os alunos, e então seta a matriz de horário de cada um para guardar 0 nas posições
 	for(k=0; k<TAM; k++){
 		aluno[k].matricula=0;
 		for(i=0; i<4; i++){
@@ -46,16 +45,16 @@ main(){
 			aluno[k].materias[j]=0;
 			}
 		}
+		aluno[k].grade[-1][-1]=0;
 	}
 	
-	
+	//aqui uma função com alunos já cadastrados para fins de exemplificação, só para não serem cadastrados pelo usuário
 	cadastroAluno(aluno);
 	
-	//retornaMat(aluno, materia, 0, a);
-	//puts(a);
-	
-	
+	//aqui uma função que cadastra todas as matérias do semestre
 	materiaSemestre(materia);
+	
+	//um loop que faz rodar o switch case até o usuário decidir fechar o programa
 	while(y==0){
 		system("cls");
 		printf("Entre com a opcao:\n");
@@ -78,8 +77,7 @@ main(){
 					system("cls");
 					cadastroMateria(aluno, materia);
 					break;
-				}
-		
+				}	
 				
 				case 3:{
 					system("cls");
@@ -91,6 +89,7 @@ main(){
 					break;
 				}
 				case 5:{
+					//Uma firula, ideia roubada da colega
 					printf("Saindo do programa...");
 					y++;					
 					break;
@@ -99,95 +98,59 @@ main(){
 					printf("Valor errado!!\n");
 					sleep(1);
 					break;
-				}
-			
+				}			
 		
 			}
 	}
 
 }
-
+//função para cadastrar matérias novas, fiz separado imaginando uma situação de reajuste
 void cadastroMateria(Alunos aluno[TAM], Materias materia[5]){
 	int y=0, x=0, i, j, a, b, c, d, index, index2, matri;
 	char resp='y';
 	printf("Entre com a matricula do aluno: \n");
 	scanf("%d",&matri);
-	
+	//como não foi especificado, assumi que só poderiam ser cadastradas matérias usando o numero da matrícula
 	for(j=0; j<TAM; j++){
-			if(aluno[j].matricula==matri)index=j;
-
-
-		}
-	
+		if(aluno[j].matricula==matri)index=j;
+	}	
 	
 	while(resp!='n'){
-		
+		//aqui pede o código da matéria, e salva os index da matriz correspondente ao código em 4 variáveis a, b, c ,d
 		printf("Entre com o codigo da materia: \n");
 		scanf("%d",&y);
-		//scanf("%d",&aluno[0].materias[0]);
-		//printf("%d",aluno[0].materias[0]);
+		
 		for(i=0; i<5; i++){
 			if(y==materia[i].cod)index2=i;
 			
-		}
-		
+		}		
 		
 		a=materia[index2].grid[0][0];
 		b=materia[index2].grid[0][1];
 		c=materia[index2].grid[1][0];
 		d=materia[index2].grid[1][1];
+		//aqui verifica se já existe alguma matéria na grade de horários, se sim, exibe essa mensagem por 2 segundos
 		if(aluno[index].grade[a][b]!=0 || aluno[index].grade[c][d]!=0){
 			printf("Conflito de horarios!!\n");
 			
 			sleep(2);
 			
 		}else{
+			//aqui ele n só salva as coordenadas como também em uma lista as disciplinas matriculadas
 			aluno[index].grade[a][b]=materia[index2].cod;
 			aluno[index].grade[c][d]=materia[index2].cod;
 			aluno[index].materias[index2]=materia[index2].cod;
 		}
-	//	if(aluno[index].grade[a][b]==0){
-			
-			
-			
-	//	}		
-		
-	/*	if(){			
-			printf("Conflito de horarios!!\n");
-			sleep(2);*/
-			
-		
-	//	}
-	//	if(aluno[index].grade[c][d]==0){
-			
-			
-			
-	//	}
 		
 		system("cls");
 		printf("Mais alguma materia? (S/N)\n");
 		scanf(" %c", &resp);
-		system("cls");
-		
-		
+		system("cls");		
 		
 	}
-		
-		
-	/*	for(i=0; i<5; i++){
-			if(aluno[index].materias[i]==y)printf("Materia ja cadastrada!\n");
-			if(aluno[index].materias[i]==127 && y == 132) printf("Horario de terca 13:00 ja ocupado!!\n");
-			if(aluno[index].materias[i]==132 && y == 127) printf("Horario de terca 13:00 ja ocupado!!\n");
-			if(aluno[index].materias[i]==143 && y == 135) printf("Horario de sexta 10:00 ja ocupado!!\n");
-			if(aluno[index].materias[i]==135 && y == 143) printf("Horario de sexta 10:00 ja ocupado!!\n");
-			if(aluno[index].materias[i]==0)aluno[index].materias[i]=y;
-			
-		}*/
-
-
 
 }
-
+//função que consulta e mostra os dados do aluno
 void consultaAluno(Alunos aluno[TAM],Materias materia[5]){
 	int i, j, index, mark=0 ;
 	char nome[30], nomeLow[30]={}, nomeCompleto[50]={};
@@ -195,27 +158,10 @@ void consultaAluno(Alunos aluno[TAM],Materias materia[5]){
 	fflush(stdin);
 	gets(nome);
 	for(i=0; i<TAM; i++){
-		int comp=0;
-	/*	if(strcmp(aluno[i].nome, nome)==0){
-			index=i;
-			fflush(stdin);
-			strcpy(nomeCompleto, aluno[i].nome);
-			fflush(stdin);
-			strcat(strcat(nomeCompleto, " "),aluno[i].sobre);
-			printf("\n");
-			puts(nomeCompleto);
-			printf("\n");			
-			puts(aluno[i].email);
-			printf("\nMatricula: %d\n\n",aluno[i].matricula);
-			fflush(stdin);
-			imprime(aluno, materia, aluno[i].matricula);
-			fflush(stdin);
-			 */
-			
-			
-	//	}
+		int comp=0;			
+	
 		for(j=0; j<strlen(nome); j++){
-			
+			//um pulo do gato que precisei fazer para o case da letra não me atrapalhar na verificação do nome
 			strcpy(nomeLow, aluno[i].nome);
 			strlwr(nomeLow);
 			if(nome[j]==nomeLow[j]){
@@ -225,7 +171,8 @@ void consultaAluno(Alunos aluno[TAM],Materias materia[5]){
 				comp=0;
 			}
 				
-			if(j+1==strlen(nome)&&comp>=3){
+			if(j+1==strlen(nome) && comp >= 3){
+				//aqui ele verifica se já foram todas as letras, e tbm se foram digitadas no mínimo 3 
 				mark++;
 				index=i;
 				fflush(stdin);
@@ -241,40 +188,41 @@ void consultaAluno(Alunos aluno[TAM],Materias materia[5]){
 				fflush(stdin);
 				imprime(aluno, materia,aluno[i].matricula);
 				fflush(stdin);
-				sleep(3);
-				return;
-					
+				sleep(6);
+				//esse uso do return que só me liguei nas ultimas aulas revolucionou minha logica
+				return;					
 				
-			}
-			
+			}			
 					
-		}
-	
+		}	
 		
 	}
+	
 		if(i==TAM && mark==0){
 			system("cls");
 			printf("Aluno nao encontrado.\n");
 			sleep(2);
 			system("cls");
 			return;
-		}
-	
+		}	
 	
 }
-
+//cadastro de novo aluno
 void novoAluno(Alunos aluno[TAM], Materias materia[5]){
 	int i, j, k, l, x=0, index, arroba=0, ponto=0;
 	char email[30];
-	
+	//aqui verifica onde tem uma posição de aluno vazia
 	for(i=0; i<TAM; i++){
 		if(aluno[i].matricula==0)index=i;
+		break;
 	}
+	//paranoia tamanha que aqui mais uma vez é zerado a grade do aluno em questão
 	for(k=0; k<4; k++){
 		for(l=0; l<5; l++){
 			aluno[index].grade[k][l]=0;
 		}
 	}
+	aluno[index].grade[-1][-1]=0;
 	fflush(stdin);
 	printf("Entre com o nome do novo aluno: \n");
 	gets(aluno[index].nome);	
@@ -282,9 +230,9 @@ void novoAluno(Alunos aluno[TAM], Materias materia[5]){
 	printf("Entre com o sobrenome do novo aluno: \n");
 	gets(aluno[index].sobre);
 	fflush(stdin);
-	printf("Entre com o numero da matricula: \n");
-	
+	printf("Entre com o numero da matricula: \n");	
 	scanf("%d",&aluno[index].matricula);
+	//aqui a verificação do email que só aceita a entrada quando as 3 condições são satifeitas
 	while(x < 3){
 		fflush(stdin);
 		printf("Entre com email do novo aluno: \n");
@@ -308,20 +256,22 @@ void novoAluno(Alunos aluno[TAM], Materias materia[5]){
 				
 				ponto=j;				
 			}
-			if(email[j]=='.' && j-arroba < 3){
+			if(email[j]=='.' && j-arroba <= 3){
 				printf("Email deve tar ao menos 3 caracteres apos o @ \n");
-				
-			}else if(email[j]=='.' && j-arroba >= 3){
+				break;
+			}if(email[j]=='.' && j-arroba > 3){
 				x++;
 			}
 			if(email[j]=='\0' && j-ponto < 3){
 				printf("Email deve ter ao menos 2 caracteres apos o .\n",ponto);
 				
 				j=30;
-			}else if(email[j]=='\0' && j-ponto >= 3){
+			}if(email[j]=='\0' && j-ponto >= 3){
+				
 				x++;
 			}
 			if(x==3){
+				//já vi essa estrutuda uma vez em um cadastro de jogo, então achei realista ser feito assim
 				system("cls");
 				strcpy(aluno[index].email, email);
 				printf("Va para o cadastro das materias!!\n");
@@ -330,8 +280,7 @@ void novoAluno(Alunos aluno[TAM], Materias materia[5]){
 			}
 		}
 		
-	}
-	//cadastroMateria(aluno,materia);
+	}	
 	
 }
 
@@ -339,10 +288,9 @@ void novoAluno(Alunos aluno[TAM], Materias materia[5]){
 void cadastroAluno(Alunos aluno[TAM]){
 
 
-
 	strcpy(aluno[0].nome, "Julia");
 	strcpy(aluno[0].sobre, "Piluski");
-	strcpy(aluno[0].email, "asjaosjoasjoas@hotmail.com");
+	strcpy(aluno[0].email, "juliap@hotmail.com");
 	aluno[0].matricula=1220;
 	aluno[0].materias[0]=122;
 	aluno[0].materias[1]=127;
@@ -353,9 +301,7 @@ void cadastroAluno(Alunos aluno[TAM]){
 	aluno[0].grade[1][1]=122;
 	aluno[0].grade[2][1]=127;
 	aluno[0].grade[3][2]=127;
-	aluno[0].grade[1][4]=143;
-	
-	
+	aluno[0].grade[1][4]=143;	
 	
 	
 	strcpy(aluno[1].nome, "Gabriela");
@@ -390,20 +336,17 @@ void cadastroAluno(Alunos aluno[TAM]){
 	aluno[2].grade[3][2]=127;
 	aluno[2].grade[1][4]=143;
 
-
 }
 
 void imprime(Alunos aluno[TAM], Materias materia[5], int matri){
 	int i, j, index;
 	char a[40]={};
-/*	printf("Entre com a matricula: \n");
-	scanf("%d", &matri); */
+//um contador que encontra o index da matricula que entrou 
 	for(j=0; j<TAM; j++){
 		if(aluno[j].matricula==matri)index=j;
-	} 
+	} 	
 	
-	
-	
+	// essa impressão achei que era a forma mais condizente de se fazer
 	printf("        Seg        Ter       Qua       Qui       sex\n\n");
 	 for(i=0; i<4; i++){
 	 	for(j=0; j<5; j++){
@@ -418,44 +361,35 @@ void imprime(Alunos aluno[TAM], Materias materia[5], int matri){
 	 		if(i==2 && j==0)printf("13:00   ");
 	 		if(i==2)printf("%s       ",a);
 	 		if(i==3 && j==0)printf("15:00   ");
-	 		if(i==3)printf("%s       ",a);
-	 		//printf("%d   ", aluno[index].grade[i][j]);
+	 		if(i==3)printf("%s       ",a);	 		
 	 		if(j==4)printf("\n");
-	 		//puts(retornaMat(aluno, materia, index));
+	 		
 		 }
 		 printf("\n");
-	 }
-	
-		
-		
+	 }		
 }
-
+//função que consulta informações das matérias 
 void retornaMat(Materias materia[5], int mat, char a[40]){
 	int k;
-	//char materia[30];
-	//for(i=0; i<4; i++){
-	//	for(j=0; j<5; j++){
-			for(k=0; k<5; k++){
-				if(mat==materia[k].cod){
-					strcpy(a, materia[k].abrev);
-					//printf("%d\n",materia[k].cod);
-				}
-			//	return;
-	//		}
-	//	}
+	
+	for(k=0; k<5; k++){
+		if(mat==materia[k].cod){
+			strcpy(a, materia[k].abrev);					
+		}	
 	}	
 }
+
 void consultaDisc(Materias materia[5]){
 	int i, x, y=0, z=0, s=0;
 	char nome[10];
-	while(s==0){
-		
+	while(s==0){		
 	
 		system("cls");
 		printf("Escolha a opicao:\n");
 		printf("1. Buscar pelo codigo da disciplina.\n");
 		printf("2. Buscar pelo nome da disciplina.\n");
 		scanf("%d", &z);
+		//o tempo começou a apertar e a única forma de fazer isso e funcionas foi com outro switch case
 		switch(z){
 			case 1:{
 				system("cls");
@@ -479,12 +413,10 @@ void consultaDisc(Materias materia[5]){
 				break;
 			}
 		}
-	}
+	}	
 	
-	
-	
-	
-	
+	/*poderiam estar dentro da mesma condição, porém também pela falta de tempo, dado a quantidade de provas finais, 
+	deixei em dois "if" diferentes para poder controlar melhor os problemas que tive em cada condição*/
 	while(y==0){
 		fflush(stdin);
 		int a=0;
@@ -496,7 +428,7 @@ void consultaDisc(Materias materia[5]){
 				printf("Carga horaria: %d\n",materia[i].carga);
 				puts(materia[i].dia);
 				puts(materia[i].dia2);
-				sleep(3);
+				sleep(5);
 				y++;
 				a++;					
 			}
@@ -507,7 +439,7 @@ void consultaDisc(Materias materia[5]){
 				printf("Carga horaria: %d\n",materia[i].carga);
 				puts(materia[i].dia);
 				puts(materia[i].dia2);
-				sleep(3);
+				sleep(5);
 				a++;
 				y++;
 			}
@@ -521,7 +453,7 @@ void consultaDisc(Materias materia[5]){
 	
 	}
 }
-
+//o cadastro das matérias, acrescentei a ideia de um nome abreviado para deixar a impressão da grade mais parecida com o exemplo
 void materiaSemestre( Materias materia[5]){
 	strcpy(materia[0].nome, "Algoritmos");
 	strcpy(materia[0].abrev, "Algo");
@@ -536,6 +468,7 @@ void materiaSemestre( Materias materia[5]){
 	materia[0].grid[0][1]=0;
 	materia[0].grid[1][0]=1;
 	materia[0].grid[1][1]=1;
+	
 
 	strcpy(materia[1].nome, "Estrutura de dados");
 	strcpy(materia[1].abrev, "Estr");
@@ -564,8 +497,7 @@ void materiaSemestre( Materias materia[5]){
 	materia[2].grid[0][0]=2;
 	materia[2].grid[0][1]=1;
 	materia[2].grid[1][0]=1;
-	materia[2].grid[1][1]=3;
-	
+	materia[2].grid[1][1]=3;	
 	
 
 	strcpy(materia[3].nome, "Padroes de Projeto");
@@ -578,8 +510,8 @@ void materiaSemestre( Materias materia[5]){
 	materia[3].cod=143;
 	materia[3].grid[0][0]=1;
 	materia[3].grid[0][1]=4;
-	materia[3].grid[1][0]=-1;
-	materia[3].grid[1][1]=-1;
+	materia[3].grid[1][0]=1;
+	materia[3].grid[1][1]=4;
 	
 
 	strcpy(materia[4].nome, "Banco de dados II");
@@ -595,7 +527,5 @@ void materiaSemestre( Materias materia[5]){
 	materia[4].grid[0][1]=2;
 	materia[4].grid[1][0]=1;
 	materia[4].grid[1][1]=4;
-	
-
 
 }
